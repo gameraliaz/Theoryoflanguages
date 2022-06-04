@@ -108,12 +108,92 @@ namespace Theoryoflanguages
             List<SDelta> Deltad = new List<SDelta>();
             List<q> FinalStatesd = new List<q>();
 
+            List<List<q>> Nodes = new List<List<q>>();
+            Qd.Add(StartState);
+
+            List<q> StartstateL = new List<q>();
+            StartstateL.Add(StartState);
+            Nodes.Add(StartstateL);
+            for (int i = 0; i < Nodes.Count; i++)
+            {
+                foreach (char c in Sigma)
+                {
+
+                    List<SDelta> Deltad2 = new List<SDelta>();
+
+                    for (int k = 0; k < Nodes[i].Count; k++)
+                    {
+                        q qi = new q();
+                        List<q> newNodes = _deltaStar(Nodes[i][k], c.ToString());
+                        qi.SetNameWithSetOfQs(newNodes);
+
+                        bool rep = false;
+                        foreach (q qd in Qd)
+                        {
+                            if (qd.Name == qi.Name)
+                            {
+                                rep = true;
+                                break;
+                            }
+                        }
+                        if (!rep)
+                        {
+                            Nodes.Add(newNodes);
+                        }
+
+
+                        SDelta sd = new SDelta();
+                        sd.OriState = Nodes[i][k];
+                        sd.DesState = qi;
+                        sd.ReadChar = c;
+                        Deltad2.Add(sd);
+                    }
+                    q nq = new q();
+                    q dq = new q();
+                    SDelta sd2 = new SDelta();
+                    sd2.OriState = nq;
+                    sd2.DesState = dq;
+                    sd2.ReadChar = c;
+                    List<q> desNodes = new List<q>();
+                    nq.SetNameWithSetOfQs(Nodes[i]);
+
+                    foreach (SDelta d2 in Deltad2)
+                    {
+                        desNodes.Add(d2.DesState);
+                    }
+                    dq.SetNameWithSetOfQs(desNodes);
+
+
+                    bool repd = false;
+                    foreach (SDelta del in Deltad)
+                    { 
+                        if (del.OriState.Name == sd2.OriState.Name && del.DesState.Name == sd2.DesState.Name && del.ReadChar==sd2.ReadChar)
+                        {
+                            repd = true;
+                            break;
+                        }
+                    }
+                    bool repq = false;
+                    foreach (q qd in Qd)
+                    {
+                        if (qd.Name == dq.Name)
+                        {
+                            repq = true;
+                            break;
+                        }
+                    }
+                    if (!repd)
+                        Deltad.Add(sd2);
+                    if (!repq)
+                        Qd.Add(dq);
+                }
+            }
 
 
 
 
 
-            
+
 
 
 
