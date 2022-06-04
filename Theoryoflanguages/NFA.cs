@@ -163,7 +163,6 @@ namespace Theoryoflanguages
                     }
                     dq.SetNameWithSetOfQs(desNodes);
 
-
                     bool repd = false;
                     foreach (SDelta del in Deltad)
                     { 
@@ -191,9 +190,41 @@ namespace Theoryoflanguages
 
 
 
+            
 
-
-
+            foreach(q fq in Qd)
+            {
+                bool ff=false;
+                List<string> n = fq.Name.Split(',','}','{').ToList();
+                foreach (string s in n)
+                {
+                    bool had = false;
+                    foreach (q fs in FinalStates)
+                    {
+                        if(fs.Name == s)
+                        {
+                            foreach (q fsd in FinalStatesd)
+                            {
+                                if (fsd.Name == fq.Name)
+                                {
+                                    had = true;
+                                    break;
+                                }
+                            }
+                            if (!had)
+                            {
+                                FinalStatesd.Add(fq);
+                                ff = true;
+                                break;
+                            }
+                        }
+                        if (had)
+                            break;
+                    }
+                    if (ff || had)
+                        break;
+                }
+            }
 
 
 

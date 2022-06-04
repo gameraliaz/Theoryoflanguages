@@ -106,12 +106,7 @@ namespace UI
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            DFA n=nfa.ToDFA();
-            
-            foreach(SDelta sd in n.Delta)
-            {
-                MessageBox.Show(sd.OriState.Name+","+sd.ReadChar.ToString()+"="+sd.DesState.Name);
-            }
+           // DFA n=nfa.ToDFA();
            // MessageBox.Show(dfa.Read(ReadTXT.Text) ? "Yes" : "No");
            // MessageBox.Show(nfa.Read(ReadTXT.Text) ? "Yes" : "No");
         }
