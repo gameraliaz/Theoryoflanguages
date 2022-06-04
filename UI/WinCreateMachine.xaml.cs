@@ -138,5 +138,85 @@ namespace UI
             Delta.Add(nd);
             dgDelta.Items.Refresh();
         }
+
+        private void Button_Click_8(object sender, RoutedEventArgs e)
+        {
+            bool typeDFA = true;
+            if (Delta.Count == (Sigma.Count * Q.Count))
+            {
+                foreach (var q in Q)
+                {
+                    List<BSigma> qs = new List<BSigma>();
+                    foreach(var d in Delta)
+                    {
+                        if(d.OriState.Name==q.Name)
+                        {
+                            foreach(var sigm in qs)
+                            {
+                                if(sigm.ReadChar==d.ReadChar)
+                                {
+                                    typeDFA = false;
+                                    break;
+                                }
+                            }
+                            if (!typeDFA)
+                                break;
+                            BSigma bsim=new BSigma();
+                            bsim.ReadChar = d.ReadChar;
+                            qs.Add(bsim);
+                        }
+                    }
+                    if (!typeDFA)
+                        break;
+                    if(qs.Count==Sigma.Count)
+                    {
+                        foreach(var ns in qs)
+                        {
+                            bool hsig = false;
+                            foreach(var os in Sigma)
+                            {
+                                if(os.ReadChar==ns.ReadChar)
+                                {
+                                    hsig= true;
+                                    break;
+                                }
+                            }
+                            if(!hsig)
+                            {
+                                typeDFA= false;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        typeDFA=false;
+                        break;
+                    }
+                }
+            }
+            else
+                typeDFA=false;
+
+
+            if(typeDFA)
+            {
+                DFA dfa = new DFA(Q, Sigma, Delta, StartState, FinalStates);
+                foreach (Window window in Application.Current.Windows.OfType<MainWindow>())
+                {
+                    ((MainWindow)window).DFAs.Add(dfa);
+                    ((MainWindow)window).dgDFAs.Items.Refresh();
+                }
+            }
+            else
+            {
+                NFA nfa = new NFA(Q, Sigma, Delta, StartState, FinalStates);
+                foreach (Window window in Application.Current.Windows.OfType<MainWindow>())
+                {
+                    ((MainWindow)window).NFAs.Add(nfa);
+                    ((MainWindow)window).dgNFAs.Items.Refresh();
+                }
+            }
+        }
     }
 }
