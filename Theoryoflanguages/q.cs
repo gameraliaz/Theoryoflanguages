@@ -41,5 +41,9 @@ namespace Theoryoflanguages
                 Name =Name.Remove(Name.Length - 1);
             Name+="}";
         }
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

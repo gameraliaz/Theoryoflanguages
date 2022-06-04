@@ -10,19 +10,19 @@ namespace Theoryoflanguages
     public class NFA : FiniteMachine
     {
         public List<q> Q { get; set; }
-        public List<char> Sigma { get; set; }
+        public List<BSigma> Sigma { get; set; }
         public List<SDelta> Delta { get; set; }
         public q StartState { get; set; }
         public List<q> FinalStates { get; set; }
         public NFA()
         {
             this.Q = new List<q>();
-            this.Sigma = new List<char>();
+            this.Sigma = new List<BSigma>();
             this.Delta = new List<SDelta>();
             this.StartState = new q();
             this.FinalStates = new List<q>();
         }
-        public NFA(List<q> Q, List<char> Sigma, List<SDelta> Delta, q StartState, List<q> FinalStates)
+        public NFA(List<q> Q, List<BSigma> Sigma, List<SDelta> Delta, q StartState, List<q> FinalStates)
         {
             this.Q = Q;
             this.Sigma = Sigma;
@@ -54,7 +54,7 @@ namespace Theoryoflanguages
             State.Add(cState);
             if(sentence=="")
             {
-                State.AddRange(_deltaStar(cState, "L"));
+                State.AddRange(_deltaStar(cState, "λ"));
                 return State;
             }
                 
@@ -81,7 +81,7 @@ namespace Theoryoflanguages
                     if(d.ReadChar == c)
                     {
                         State1.Add(d.DesState);
-                    }else if(d.ReadChar == 'L' && c!='L')
+                    }else if(d.ReadChar == 'λ' && c!= 'λ')
                     {
                         State2.Add(d.DesState);
                     }
@@ -89,7 +89,7 @@ namespace Theoryoflanguages
             }
             foreach( q s in State1)
             {
-                State1.AddRange(_deltaS(s, 'L'));
+                State1.AddRange(_deltaS(s, 'λ'));
                 break;
             }
             foreach (q s in State2)
@@ -100,7 +100,49 @@ namespace Theoryoflanguages
             return State1;
         }
 
+        public List<string> show()
+        {
+            List<string> list = new List<string>();
+            string qs = "{";
+            foreach (q qw in Q)
+            {
+                qs += qw.Name + ",";
+            }
+            if (Q.Count > 0 && qs != "{")
+                qs = qs.Remove(qs.Length - 1);
+            list.Add(qs);
 
+            string qs1 = "{";
+            foreach (BSigma c in Sigma)
+            {
+                qs1 += c.ReadChar.ToString() + ",";
+            }
+            if (Q.Count > 0 && qs1 != "{")
+                qs1 = qs1.Remove(qs1.Length - 1);
+            list.Add(qs1);
+
+            string qs2 = "{";
+            foreach (SDelta s in Delta)
+            {
+                qs2 += "d(" + s.OriState.Name + "," + s.ReadChar.ToString() + ")= " + s.DesState.Name + " , ";
+            }
+            if (Q.Count > 0 && qs2 != "{")
+                qs2 = qs2.Remove(qs2.Length - 1);
+            list.Add(qs2);
+
+            list.Add(StartState.Name);
+
+            string qs3 = "{";
+            foreach (q qf in FinalStates)
+            {
+                qs3 += qf.Name + ",";
+            }
+            if (Q.Count > 0 && qs3 != "{")
+                qs3 = qs.Remove(qs3.Length - 1);
+            list.Add(qs);
+
+            return list;
+        }
         public DFA ToDFA()
         {
             DFA dfa ;
@@ -116,7 +158,7 @@ namespace Theoryoflanguages
             Nodes.Add(StartstateL);
             for (int i = 0; i < Nodes.Count; i++)
             {
-                foreach (char c in Sigma)
+                foreach (BSigma c in Sigma)
                 {
 
                     List<SDelta> Deltad2 = new List<SDelta>();
@@ -124,7 +166,7 @@ namespace Theoryoflanguages
                     for (int k = 0; k < Nodes[i].Count; k++)
                     {
                         q qi = new q();
-                        List<q> newNodes = _deltaStar(Nodes[i][k], c.ToString());
+                        List<q> newNodes = _deltaStar(Nodes[i][k], c.ReadChar.ToString());
                         qi.SetNameWithSetOfQs(newNodes);
 
                         bool rep = false;
@@ -145,7 +187,7 @@ namespace Theoryoflanguages
                         SDelta sd = new SDelta();
                         sd.OriState = Nodes[i][k];
                         sd.DesState = qi;
-                        sd.ReadChar = c;
+                        sd.ReadChar = c.ReadChar;
                         Deltad2.Add(sd);
                     }
                     q nq = new q();
@@ -153,7 +195,7 @@ namespace Theoryoflanguages
                     SDelta sd2 = new SDelta();
                     sd2.OriState = nq;
                     sd2.DesState = dq;
-                    sd2.ReadChar = c;
+                    sd2.ReadChar = c.ReadChar;
                     List<q> desNodes = new List<q>();
                     nq.SetNameWithSetOfQs(Nodes[i]);
 

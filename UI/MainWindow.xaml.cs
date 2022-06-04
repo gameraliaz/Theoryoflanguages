@@ -21,11 +21,13 @@ namespace UI
     /// </summary>
     public partial class MainWindow : Window
     {
-        DFA dfa = new DFA();
-        NFA nfa = new NFA();
+        public List<DFA> DFAs { get; set; }
+        public List<NFA> NFAs { get; set; }
         public MainWindow()
         {
             InitializeComponent();
+            DFA dfa ;
+            NFA nfa ;
             List<q> Q = new List<q>();
             for(int i=0;i<5;i++)
             {
@@ -33,9 +35,13 @@ namespace UI
                 qn.Name = "q" + i;
                 Q.Add(qn);
             }
-            List<char> Sigma = new List<char>();
-            Sigma.Add('a');
-            Sigma.Add('b');
+            List<BSigma> Sigma = new List<BSigma>();
+            BSigma s=new BSigma();
+            s.ReadChar = 'a';
+            Sigma.Add(s);
+            BSigma s2 = new BSigma();
+            s2.ReadChar = 'b';
+            Sigma.Add(s2);
             List<SDelta> Delta = new List<SDelta>();
             for(int i=0;i<10;i++)
                 Delta.Add(new SDelta());
@@ -80,10 +86,10 @@ namespace UI
             Delta2[0].ReadChar = 'a';
             Delta2[0].OriState = Q[0];
             Delta2[0].DesState = Q[1];
-            Delta2[1].ReadChar = 'L';
+            Delta2[1].ReadChar = 'λ';
             Delta2[1].OriState = Q[0];
             Delta2[1].DesState = Q[3];
-            Delta2[2].ReadChar = 'L';
+            Delta2[2].ReadChar = 'λ';
             Delta2[2].OriState = Q[1];
             Delta2[2].DesState = Q[4];
             Delta2[3].ReadChar = 'b';
@@ -92,7 +98,7 @@ namespace UI
             Delta2[4].ReadChar = 'a';
             Delta2[4].OriState = Q[2];
             Delta2[4].DesState = Q[3];
-            Delta2[5].ReadChar = 'L';
+            Delta2[5].ReadChar = 'λ';
             Delta2[5].OriState = Q[4];
             Delta2[5].DesState = Q[3];
             Delta2[6].ReadChar = 'a';
@@ -102,13 +108,21 @@ namespace UI
             Delta2[7].OriState = Q[3];
             Delta2[7].DesState = Q[3];
             nfa = new NFA(Q, Sigma, Delta2, Q[0], FinalStates);
+
+            DFAs = new List<DFA>();
+            NFAs = new List<NFA>();
+            DFAs.Add(dfa);
+            NFAs.Add(nfa);
+
+            dgDFAs.ItemsSource = DFAs;
+            dgNFAs.ItemsSource = NFAs;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           // DFA n=nfa.ToDFA();
-           // MessageBox.Show(dfa.Read(ReadTXT.Text) ? "Yes" : "No");
-           // MessageBox.Show(nfa.Read(ReadTXT.Text) ? "Yes" : "No");
+            WinCreateMachine winCreateMachine = new WinCreateMachine();
+            winCreateMachine.ShowDialog();
+
         }
     }
 }

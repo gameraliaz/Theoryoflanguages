@@ -5,10 +5,122 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="1200">
     <Grid>
-        <TextBox x:Name="ReadTXT" HorizontalAlignment="Left" Margin="485,200,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="175" Height="58"/>
-        <Button Content="btn" HorizontalAlignment="Left" Margin="197,200,0,0" VerticalAlignment="Top" Height="53" Width="161" Click="Button_Click"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="5"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,3">
+                    <GradientStop Color="#353535" Offset="0"/>
+                    <GradientStop Color="#7D41C9" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
+                <Button Content="Add a machine to lists" Height="50"  Margin="5" Click="Button_Click"/>
+            </StackPanel>
+            
+        </Grid>
+
+
+        <DataGrid GridLinesVisibility="None" Grid.Column="0" x:Name="dgDFAs" ItemsSource="{Binding Path=DFAs}"
+                            AutoGenerateColumns="False">
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Style.Setters>
+                        <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                    </Style.Setters>
+                </Style>
+            </DataGrid.CellStyle>
+            
+            
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Q" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DataGrid ItemsSource="{Binding Q}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Sigma">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DataGrid ItemsSource="{Binding Sigma}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Delta" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DataGrid ItemsSource="{Binding Delta}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Start Node" Binding="{Binding StartState}"/>
+                <DataGridTemplateColumn Header="FinalStates" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DataGrid ItemsSource="{Binding FinalStates}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid GridLinesVisibility="None" Grid.Column="2" x:Name="dgNFAs" AutoGenerateColumns="False" ItemsSource="{Binding Path=NFAs}">
+            
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Q" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DataGrid ItemsSource="{Binding Q}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Sigma">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DataGrid ItemsSource="{Binding Sigma}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Delta" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DataGrid ItemsSource="{Binding Delta}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Start Node" Binding="{Binding StartState}"/>
+                <DataGridTemplateColumn Header="FinalStates" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DataGrid ItemsSource="{Binding FinalStates}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+
 
     </Grid>
 </Window>

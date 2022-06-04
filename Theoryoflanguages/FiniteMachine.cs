@@ -9,11 +9,13 @@ namespace Theoryoflanguages
     interface FiniteMachine
     {
         public List<q> Q { get; set; }
-        public List<char> Sigma { get; set; }
+        public List<BSigma> Sigma { get; set; }
         public List<SDelta> Delta { get; set; }
         public q StartState { get; set; }
         public List<q> FinalStates { get; set; }
 
+
+        public List<string> show();
         public bool Read(string sentence);
     }
 }
