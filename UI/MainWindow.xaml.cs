@@ -122,7 +122,37 @@ namespace UI
         {
             WinCreateMachine winCreateMachine = new WinCreateMachine();
             winCreateMachine.ShowDialog();
+        }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            string sentence=tbSentence.Text.Trim();
+            MessageBox.Show(NFAs[dgNFAs.SelectedIndex].Read(sentence) ? "Yes this is readable by this machine!" : "No this is not readable by this machine!");
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            DFA dfa = NFAs[dgNFAs.SelectedIndex].ToDFA();
+            DFAs.Add(dfa);
+            dgDFAs.Items.Refresh();
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            NFAs.Remove(NFAs[dgNFAs.SelectedIndex]);
+            dgNFAs.Items.Refresh();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            string sentence = tbSentence2.Text.Trim();
+            MessageBox.Show(DFAs[dgDFAs.SelectedIndex].Read(sentence) ? "Yes this is readable by this machine!" : "No this is not readable by this machine!");
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            DFAs.Remove(DFAs[dgDFAs.SelectedIndex]);
+            dgDFAs.Items.Refresh();
         }
     }
 }

@@ -34,10 +34,6 @@ namespace Theoryoflanguages
         public bool Read(string sentence)
         {
             List<q> states= _deltaStar(StartState, sentence);
-            foreach(q s in states)
-            { 
-                MessageBox.Show(s.Name);
-            }
             foreach (q fq in FinalStates)
             {
                 if (states.Contains(fq))
@@ -151,6 +147,8 @@ namespace Theoryoflanguages
             List<q> FinalStatesd = new List<q>();
 
             List<List<q>> Nodes = new List<List<q>>();
+            StartState.Name="{"+StartState.Name+"}";
+            
             Qd.Add(StartState);
 
             List<q> StartstateL = new List<q>();

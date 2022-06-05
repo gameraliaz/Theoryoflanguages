@@ -218,5 +218,22 @@ namespace UI
                 }
             }
         }
+
+        private void Button_Click_9(object sender, RoutedEventArgs e)
+        {
+            Q.Clear();
+            Sigma.Clear();
+            Delta.Clear();
+            FinalStates.Clear();
+            dgDelta.Items.Refresh();
+            dgFinalStates.Items.Refresh();
+            dgQ.Items.Refresh();
+            dgSigma.Items.Refresh();
+
+            txtStartNode.Text = "example node";
+            originNode.Text = "origin: example node";
+            letter.Text = "letter: example letter";
+            destinitionNode.Text = "destinition: example node";
+        }
     }
 }

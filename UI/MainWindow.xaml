@@ -42,15 +42,6 @@
 
         <DataGrid GridLinesVisibility="None" Grid.Column="0" x:Name="dgDFAs" ItemsSource="{Binding Path=DFAs}"
                             AutoGenerateColumns="False">
-            <DataGrid.CellStyle>
-                <Style TargetType="{x:Type DataGridCell}">
-                    <Style.Setters>
-                        <Setter Property="TextBlock.TextAlignment" Value="Center"/>
-                    </Style.Setters>
-                </Style>
-            </DataGrid.CellStyle>
-            
-            
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Q" >
                     <DataGridTemplateColumn.CellTemplate>
@@ -82,10 +73,20 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Read a sentence">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Margin="5" Text="example sentence" x:Name="tbSentence2"/>
+                            <Button Margin="5" Content="can Read?" Click="Button_Click_2"/>
+                        </StackPanel>
+                    </MenuItem>
+                    <MenuItem Header="Delete" Click="MenuItem_Click_2"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
 
         <DataGrid GridLinesVisibility="None" Grid.Column="2" x:Name="dgNFAs" AutoGenerateColumns="False" ItemsSource="{Binding Path=NFAs}">
-            
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Q" >
                     <DataGridTemplateColumn.CellTemplate>
@@ -117,6 +118,18 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Read a sentence">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Margin="5" Text="example sentence" x:Name="tbSentence"/>
+                            <Button Margin="5" Content="can Read?" Click="Button_Click_1"/>
+                        </StackPanel>
+                    </MenuItem>
+                    <MenuItem Header="To DFA" Click="MenuItem_Click"/>
+                    <MenuItem Header="Delete" Click="MenuItem_Click_1"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
 
 

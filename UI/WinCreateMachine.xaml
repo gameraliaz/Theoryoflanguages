@@ -17,8 +17,15 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
+        <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".3*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"   Height="40" Margin="5" Content="Clear" Click="Button_Click_9"/>
+            <Button Grid.Column="1"   Height="40" Margin="5" Content="Add to machine list" Click="Button_Click_8"/>
+        </Grid >
         
-        <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Height="40" Margin="5" Content="Add to machine list" Click="Button_Click_8"/>
         
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0">
             <Expander Foreground="White" FontSize="15" Header="Add a node to Q" Margin="5">
