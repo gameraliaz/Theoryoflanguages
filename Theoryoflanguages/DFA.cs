@@ -30,7 +30,7 @@ namespace Theoryoflanguages
             this.FinalStates = FinalStates;
         }
 
-        public bool Read(string sentence)
+        public virtual bool Read(string sentence)
         {
             q currentState = StartState;
             foreach (char c in sentence)
@@ -53,7 +53,7 @@ namespace Theoryoflanguages
             return false;
         }
 
-        public List<string> show()
+        public virtual List<string> show()
         {
             List<string> list = new List<string>();
             string qs = "{";
