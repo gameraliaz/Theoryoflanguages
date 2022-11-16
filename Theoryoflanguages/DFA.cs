@@ -52,7 +52,19 @@ namespace Theoryoflanguages
                 return true;
             return false;
         }
-
+        public virtual q Read(q startstate,char c)
+        {
+            q currentState = startstate;
+            foreach (SDelta sd in Delta)
+            {
+                if (sd.OriState.Name == currentState.Name && sd.ReadChar == c)
+                {
+                    currentState = sd.DesState;
+                    break;
+                }
+            }
+            return currentState;
+        }
         public virtual List<string> show()
         {
             List<string> list = new List<string>();
