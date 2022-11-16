@@ -55,13 +55,21 @@ namespace Theoryoflanguages
         public virtual q Read(q startstate,char c)
         {
             q currentState = startstate;
+            bool cinSigmas = false;
             foreach (SDelta sd in Delta)
             {
                 if (sd.OriState.Name == currentState.Name && sd.ReadChar == c)
                 {
                     currentState = sd.DesState;
+                    cinSigmas = true;
                     break;
                 }
+            }
+            if (cinSigmas)
+            {
+                q err=new q();
+                err.Name = "-1";
+                return err;
             }
             return currentState;
         }
